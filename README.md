@@ -1,7 +1,3 @@
-- [aliason](#aliason)
-  - [Using aliason](#using-aliason)
-  - [Declaring aliases](#declaring-aliases)
-
 # aliason
 aliason is a shell tool for managing project-specific shell aliases.
 
