@@ -11,7 +11,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-const aliasFilename = ".aliasrc"
+const aliasFilename = ".aliasonrc"
 const unaliasEnvVar = "ALIASION_UNENV"
 const aliasonInstall = `
 function cd() {
@@ -72,13 +72,13 @@ func sourceAliasrc() *[]string {
 
 	data, err := ioutil.ReadFile(aliasFilename)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to load .aliasrc")
+		fmt.Fprintf(os.Stderr, "Failed to load .aliasonrc")
 	}
 
 	m := make(map[string]string)
 	err = yaml.Unmarshal(data, &m)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to parse .aliasrc file.")
+		fmt.Fprintf(os.Stderr, "Failed to parse .aliasonrc file.")
 	}
 
 	if command := generateAliasCommand(&m); command != "" {
@@ -100,7 +100,7 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:  "env",
-			Usage: "Source .aliasrc in the current directory.",
+			Usage: "Source .aliasonrc in the current directory.",
 			Action: func(c *cli.Context) error {
 				commands := sourceAliasrc()
 				if len(*commands) > 0 {
