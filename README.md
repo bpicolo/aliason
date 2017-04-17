@@ -1,6 +1,9 @@
+- [aliason](#aliason)
+  - [Using aliason](#using-aliason)
+  - [Declaring aliases](#declaring-aliases)
+  - [todo:](#todo:)
+
 # aliason
-
-
 aliason is a shell tool for managing project-specific shell aliases.
 
 Installation:
@@ -12,6 +15,7 @@ I created aliason primarily out of the desire to not remember specific test-runn
 commands for different repos. Task runners like Make have left
 me shorthanded because passing arguments can be such a pain, whereas shell aliases
 have been useful, but not portable between projects.
+
 
 ## Using aliason
 Getting started with aliason is straightforward, simply:
