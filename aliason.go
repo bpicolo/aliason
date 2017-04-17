@@ -7,6 +7,8 @@ import (
 
 	"fmt"
 
+	"strconv"
+
 	"github.com/urfave/cli"
 	"gopkg.in/yaml.v2"
 )
@@ -27,6 +29,11 @@ func getRemoveCurrentAliases() string {
 	return os.Getenv(unaliasEnvVar)
 }
 
+func sanitizeAlias(a string) string {
+
+	return strconv.Quote(a)
+}
+
 func generateAliasCommand(m *map[string]string) string {
 	if len(*m) == 0 {
 		return ""
@@ -34,7 +41,7 @@ func generateAliasCommand(m *map[string]string) string {
 
 	var parts []string
 	for k, v := range *m {
-		parts = append(parts, fmt.Sprintf("%s=\"%s\"", k, v))
+		parts = append(parts, fmt.Sprintf("%s=%s", k, sanitizeAlias(v)))
 	}
 
 	return fmt.Sprintf("alias %s", strings.Join(parts, " "))

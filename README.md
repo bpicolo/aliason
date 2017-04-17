@@ -8,8 +8,8 @@ go get github.com/bpicolo/aliason
 
 I created aliason primarily out of the desire to not remember specific test-running
 commands for different repos. Task runners like Make have left
-me shorthanded because passing arguments can be such a pain, whereas shell aliases
-have been useful, but not portable between projects.
+me shorthanded because passing arguments to them can be a huge pain, whereas shell aliases
+are useful, but not portable between projects.
 
 
 ## Using aliason
@@ -27,7 +27,7 @@ This does two things:
 
 These options seemed the most straightforward, but there a couple alternatives. Manually
 running `eval $(aliason env)` should pick up the aliases in your current env. There's also
-a valid path through PROMPT_COMMAND, and probably any number of other alternatives as well.
+proably a valid strategy using PROMPT_COMMAND, and probably any number of other alternatives as well.
 Anything that runs `eval $(aliason env)` when desired should do the trick.
 
 ## Declaring aliases
@@ -41,4 +41,8 @@ test: tox
 
 ## todo
 1. Support preserving global aliases when moving between directories (or also support not-overwriting?)
-2. Tests
+2. Quoting is probably not an entirely sufficient security measure, though could be worse. Hopefully people
+tend to cd into relatively trusted directories on their boxes... When can this fail horribly? (Other than people
+being jerks in a shared repo and overwriting a builtin with 'sudo rm -rf --no-preserve-root /'). Perhaps this is part over
+the "not overwriting" above.
+3. Tests
