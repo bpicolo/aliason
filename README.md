@@ -1,7 +1,6 @@
 - [aliason](#aliason)
   - [Using aliason](#using-aliason)
   - [Declaring aliases](#declaring-aliases)
-  - [todo:](#todo:)
 
 # aliason
 aliason is a shell tool for managing project-specific shell aliases.
@@ -44,6 +43,6 @@ ping: pong
 test: tox
 ```
 
-## todo:
+## todo
 1. Support preserving global aliases when moving between directories (or also support not-overwriting?)
 2. Tests
