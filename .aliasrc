@@ -1,0 +1,2 @@
+pings: echo pongs
+install: go install
