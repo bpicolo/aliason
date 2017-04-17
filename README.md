@@ -35,7 +35,7 @@ aliason will look for an .aliasonrc file in your current directory. An .aliasonr
 simple mapping of alias names to commands in yaml syntax.
 
 ```yaml
-ping: pong
+ping: echo pong
 test: tox
 ```
 
