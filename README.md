@@ -9,9 +9,11 @@ have been useful, but not portable between projects.
 
 ## Using aliason
 Getting started with aliason is straightforward, simply:
-``bash
+
+```bash
 aliason install >> ~/.bash_profile  # or bashrc/other shell source file of choice
 ```
+
 and then source that file.
 
 This does two things:
