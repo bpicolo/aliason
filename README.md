@@ -1,6 +1,12 @@
 # aliason
 
+
 aliason is a shell tool for managing project-specific shell aliases.
+
+Installation:
+```bash
+go get github.com/bpicolo/aliason
+```
 
 I created aliason primarily out of the desire to not remember specific test-running
 commands for different repos. Task runners like Make have left
