@@ -31,8 +31,8 @@ a valid path through PROMPT_COMMAND, and probably any number of other alternativ
 Anything that runs `eval $(aliason env)` when desired should do the trick.
 
 ## Declaring aliases
-aliason will look for and .aliasrc file in your current directory. An .aliasrc file is a
-simple mapping of alias names to commands in yaml-syntax.
+aliason will look for an .aliasrc file in your current directory. An .aliasrc file is a
+simple mapping of alias names to commands in yaml syntax.
 
 ```yaml
 ping: pong
