@@ -43,3 +43,6 @@ test: tox
 1. Support preserving global aliases when moving between directories (or also support not-overwriting?)
 2. Quoting is probably not an entirely sufficient security measure, but it seems to catch accidental-execcing at the least.
 3. Tests
+
+## Exciting never-been-asked FAQs
+aliason is a portmanteau of alias and liason.
