@@ -6,10 +6,10 @@ Installation:
 go get github.com/bpicolo/aliason
 ```
 
-I created aliason primarily out of the desire to not remember specific test-running
-commands for different repos. Task runners like Make have left
-me shorthanded because passing arguments to them can be a huge pain, whereas shell aliases
-are useful, but not portable between projects.
+aliason was created primarily out of the desire to have flexible test-running
+commands across many different repos (e.g. microservices). Task runners like Make have left
+me dissatisfied because passing arguments to them can be a huge pain, whereas shell aliases
+get the job done, but aren't portable between projects.
 
 
 ## Using aliason
@@ -41,8 +41,5 @@ test: tox
 
 ## todo
 1. Support preserving global aliases when moving between directories (or also support not-overwriting?)
-2. Quoting is probably not an entirely sufficient security measure, though could be worse. Hopefully people
-tend to cd into relatively trusted directories on their boxes... When can this fail horribly? (Other than people
-being jerks in a shared repo and overwriting a builtin with 'sudo rm -rf --no-preserve-root /'). Perhaps this is part over
-the "not overwriting" above.
+2. Quoting is probably not an entirely sufficient security measure, but it seems to catch accidental-execcing at the least.
 3. Tests
