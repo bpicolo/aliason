@@ -9,6 +9,8 @@ import (
 
 	"strconv"
 
+	"os/exec"
+
 	"github.com/urfave/cli"
 	"gopkg.in/yaml.v2"
 )
@@ -34,22 +36,43 @@ func sanitizeAlias(a string) string {
 	return strconv.Quote(a)
 }
 
-func generateAliasCommand(m *map[string]string) string {
-	if len(*m) == 0 {
+func getBuiltins() map[string]bool {
+	builtins := map[string]bool{}
+	out, err := exec.Command("sh", "-c", "compgen -b").Output()
+	if err != nil {
+		return builtins
+	}
+
+	for _, cmd := range strings.Split(string(out), "\n") {
+		builtins[cmd] = true
+	}
+
+	return builtins
+}
+
+func generateAliasCommand(m map[string]string, builtins map[string]bool) string {
+	if len(m) == 0 {
 		return ""
 	}
 
 	var parts []string
-	for k, v := range *m {
+	for k, v := range m {
+		if builtins[k] {
+			fmt.Fprintf(os.Stderr, "Refusing to create alias for builtin command: %s\n", k)
+			continue
+		}
 		parts = append(parts, fmt.Sprintf("%s=%s", k, sanitizeAlias(v)))
 	}
 
 	return fmt.Sprintf("alias %s", strings.Join(parts, " "))
 }
 
-func generateUnaliasCommand(m *map[string]string) string {
+func generateUnaliasCommand(m map[string]string, builtins map[string]bool) string {
 	var keys []string
-	for k := range *m {
+	for k := range m {
+		if builtins[k] {
+			continue
+		}
 		keys = append(keys, k)
 	}
 
@@ -88,11 +111,12 @@ func sourceAliasrc() *[]string {
 		fmt.Fprintf(os.Stderr, "Failed to parse .aliasonrc file.")
 	}
 
-	if command := generateAliasCommand(&m); command != "" {
+	builtins := getBuiltins()
+	if command := generateAliasCommand(m, builtins); command != "" {
 		commands = append(commands, command)
 	}
 
-	if command := generateUnaliasCommand(&m); command != "" {
+	if command := generateUnaliasCommand(m, builtins); command != "" {
 		commands = append(commands, command)
 	}
 

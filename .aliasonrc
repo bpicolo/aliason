@@ -1,2 +1,3 @@
 pings: echo pongs
 install: go install
+cd: hello
