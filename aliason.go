@@ -28,11 +28,12 @@ function cd() {
 eval $(aliason env)`
 
 func getRemoveCurrentAliases() string {
-	return os.Getenv(unaliasEnvVar)
+	// Unalias will only fail if the alias doesn't currently exist.
+	// Should be fine to ignore errors for those cases.
+	return fmt.Sprintf("%s %s", os.Getenv(unaliasEnvVar), "&>/dev/null")
 }
 
 func sanitizeAlias(a string) string {
-
 	return strconv.Quote(a)
 }
 
@@ -89,26 +90,28 @@ func unenvAliason() *[]string {
 	return &commands
 }
 
-func sourceAliasrc() *[]string {
+func sourceAliasrc() []string {
 	var commands []string
 	if command := getRemoveCurrentAliases(); command != "" {
 		commands = append(commands, command)
+		commands = append(commands, fmt.Sprintf("unset %s", unaliasEnvVar))
 	}
 
 	if _, err := os.Stat(aliasFilename); os.IsNotExist(err) {
-		commands = append(commands, fmt.Sprintf("unset %s", unaliasEnvVar))
-		return &commands
+		return commands
 	}
 
 	data, err := ioutil.ReadFile(aliasFilename)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to load .aliasonrc")
+		fmt.Fprintf(os.Stderr, "Failed to load .aliasonrc\n")
+		return commands
 	}
 
 	m := make(map[string]string)
 	err = yaml.Unmarshal(data, &m)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to parse .aliasonrc file.")
+		fmt.Fprintf(os.Stderr, "Failed to parse .aliasonrc file.\n")
+		return commands
 	}
 
 	builtins := getBuiltins()
@@ -119,8 +122,7 @@ func sourceAliasrc() *[]string {
 	if command := generateUnaliasCommand(m, builtins); command != "" {
 		commands = append(commands, command)
 	}
-
-	return &commands
+	return commands
 }
 
 func main() {
@@ -134,8 +136,8 @@ func main() {
 			Usage: "Source .aliasonrc in the current directory.",
 			Action: func(c *cli.Context) error {
 				commands := sourceAliasrc()
-				if len(*commands) > 0 {
-					fmt.Println(strings.Join(*commands, " &&\n "))
+				if len(commands) > 0 {
+					fmt.Println(strings.Join(commands, " &&\n "))
 				}
 				return nil
 			},
