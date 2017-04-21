@@ -28,7 +28,7 @@ This does two things:
 These options seemed the most straightforward, but there a couple alternatives. Manually
 running `eval $(aliason env)` should pick up the aliases in your current env. There's also
 proably a valid strategy using PROMPT_COMMAND, and probably any number of other alternatives as well.
-Anything that runs `eval $(aliason env)` when desired should do the trick.
+Anything that runs `eval $(aliason env)` when desired should do the trick (e.g. a zsh extension or something of that nature).
 
 ## Declaring aliases
 aliason will look for an .aliasonrc file in your current directory. An .aliasonrc file is a
